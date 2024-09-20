@@ -5,13 +5,16 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args)  {
-        
+        Construcao construcao = new Construcao();
+        l();
+        construcao.conexao();
         Scanner sc = new Scanner(System.in);
         
         do {
-            System.out.println("Seja bem vindo!\n");
-
-            System.out.println("Escolha a opcao desejada:");
+            l();
+            System.out.println("\nSeja bem vindo!\n");
+            l();
+            System.out.println("Escolha a opcao desejada:\n");
             System.out.println("1 - Cadastrar construcao");
             System.out.println("2 - Consultar todos");
             System.out.println("3 - Consultar por ID");
@@ -19,7 +22,7 @@ public class Main {
             System.out.println("5 - Deletar consrucao\n");
 
             System.out.println("6 - Sair\n");
-
+            l();
             System.out.print("Sua opcao: ");
             int opcao = 0;
             try {
@@ -45,7 +48,7 @@ public class Main {
                     break;
 
                 case 6:
-                    System.out.println("------- AVISO -------");
+                    System.out.println("-------------------------- AVISO ----------------------------");
                     System.out.println("Deseja mesmo sair??");
                     System.out.print("Insira 's' caso queira sair: ");
 
@@ -63,6 +66,11 @@ public class Main {
             
         }
         while(true);
+    }
+
+    //método que imprime uma linha na tela
+    public static void l(){
+        System.out.println("-------------------------------------------------------------");
     }
     
 }

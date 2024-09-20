@@ -1,4 +1,6 @@
 -- Script a ser usado no SGBD PostgreSQL
+--usuario = postgres
+--senha   = admin123
 
 -- Criacao do database
 CREATE DATABASE banco_poo_prj1;

@@ -1,5 +1,8 @@
 package poo_crud_2sem_2024;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,6 +37,21 @@ public class Construcao {
     
     public void deletar(){
         
+    }
+
+    //método para conectar ao banco de dados
+    public void conexao(){
+        String URL = "jdbc:postgresql://localhost:5432/banco_poo_prj1";
+        String USER = "postgres";
+        String PASSWORD = "admin123";
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
+            if (conn != null){
+                System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     //Getters e Setters
