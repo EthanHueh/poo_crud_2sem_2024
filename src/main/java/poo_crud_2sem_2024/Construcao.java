@@ -21,6 +21,39 @@ public class Construcao {
     private double      orcamentoTotal;
     private String      responsavel;
     private String      status;
+
+    public static Construcao inserir(Construcao c) throws ClassNotFoundException, SQLException{
+        Connection conn = getConexao();
+        String SQL = "INSERT INTO construcoes" +
+                     "(nome, endereco, tipo," +
+                     "data_inicio, data_previsao_termino," +
+                     "area_total_m2, orcamento_total, nome_responsavel, status)" +
+                     "VALUES(?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+
+        pstmt.setString(1, c.getNome());
+        pstmt.setString(2, c.getEndereco());
+        pstmt.setString(3, c.getTipo());
+        pstmt.setDate(4, java.sql.Date.valueOf(c.getDataInicio()));
+        pstmt.setDate(5, java.sql.Date.valueOf(c.getDataPrevisaoTermino()));
+        pstmt.setDouble(6, c.getAreaTotal_m2());
+        pstmt.setDouble(7, c.getOrcamentoTotal());
+        pstmt.setString(8, c.getResponsavel());
+        pstmt.setString(9, c.getStatus());
+
+        // Executar a inserção
+        int rowsInserted = pstmt.executeUpdate();
+
+        // Verificar se a inserção foi bem-sucedida
+        if (rowsInserted > 0) {
+            System.out.println("Inserção bem-sucedida!");
+        }
+
+        // Fechar o PreparedStatement e a conexão
+        pstmt.close();
+        conn.close();
+        return c;
+    }
     
     public static List<Construcao> consultarTodos() throws SQLException, ClassNotFoundException {
         List<Construcao> construcoes = new ArrayList<>();
