@@ -2,8 +2,6 @@ package poo_crud_2sem_2024;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
 
@@ -40,16 +38,7 @@ public class Main {
                     break;
 
                 case 2:
-                    l();
-                    try {
-                        for (Construcao c: Construcao.consultarTodos()){
-                            l();
-                            System.out.println(c.toString());
-                        }
-                    } catch (SQLException | ClassNotFoundException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                    
+                    consultarTodasConstrucoes();
                     break;
 
                 case 3:
@@ -60,7 +49,7 @@ public class Main {
                         id = Integer.parseInt(sc.nextLine());
                         l();
                     } catch (NumberFormatException e){
-                        System.out.println("Insira um numero valido!!");
+                        System.out.println("Insira um numero!!");
                         break;
                     }
                     
@@ -76,6 +65,25 @@ public class Main {
                     break;
 
                 case 5:
+                    listarConstrucoes();
+                    l();
+                    
+                    int opcaoConstrucao = 0;
+                    try {
+                        System.out.print("Insira o nº da construcao que queira deletar: ");
+                        opcaoConstrucao = Integer.parseInt(sc.nextLine());
+                        
+                        try {
+                            Construcao.deletar(Construcao.consultarTodos().get(opcaoConstrucao - 1));
+                        } catch (SQLException | ClassNotFoundException | IndexOutOfBoundsException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        
+                    } catch (NumberFormatException e){
+                        System.out.println("Insira um numero!!");
+                        break;
+                    }
+                    
                     break;
 
                 case 6:
@@ -92,6 +100,9 @@ public class Main {
                     }
 
                     break;
+                    
+                default:
+                    System.out.println("Insira uma opcao valida!!");
 
             }
             
@@ -108,6 +119,33 @@ public class Main {
         try {
             if (Construcao.hasConexao()){
                 System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private static void consultarTodasConstrucoes() {
+        l();
+        
+        try {
+            for (Construcao c: Construcao.consultarTodos()){
+                l();
+                System.out.println(c.toString());
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private static void listarConstrucoes() {
+        l();
+        try {
+            int contador = 1;
+            for (Construcao c: Construcao.consultarTodos()){
+                l();
+                System.out.println(contador+" - "+c.getNome());
+                contador++;
             }
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());

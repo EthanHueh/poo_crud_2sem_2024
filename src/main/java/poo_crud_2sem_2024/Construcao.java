@@ -80,7 +80,13 @@ public class Construcao {
         
     }
     
-    public static void deletar(Construcao c){
+    public static void deletar(Construcao c) throws SQLException, ClassNotFoundException {
+        Connection conn = getConexao();
+        String SQL = "DELETE FROM construcoes WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(SQL);
+        stmt.setInt(1, c.getId());
+        
+        stmt.execute();
         
     }
     
