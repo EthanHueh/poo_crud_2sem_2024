@@ -40,18 +40,19 @@ public class Construcao {
     }
     
     public static void testarConexao() {
-        conexao();
+        if (getConexao() != null){
+            System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
+        }
     }
        
     //método para conectar ao banco de dados
-    private static Connection conexao(){
+    private static Connection getConexao(){
         String URL = "jdbc:postgresql://localhost:5432/banco_poo_prj1";
         String USER = "postgres";
         String PASSWORD = "admin123";
 
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
             if (conn != null){
-                System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
                 return conn;
             }
         } catch (SQLException e) {
