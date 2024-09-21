@@ -2,6 +2,8 @@ package poo_crud_2sem_2024;
 
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
 
@@ -51,6 +53,23 @@ public class Main {
                     break;
 
                 case 3:
+                    int id = 0;
+                    try {
+                        l();
+                        System.out.print("Insira o id da construcao desejada: ");
+                        id = Integer.parseInt(sc.nextLine());
+                        l();
+                    } catch (NumberFormatException e){
+                        System.out.println("Insira um numero valido!!");
+                        break;
+                    }
+                    
+                    try {
+                        System.out.println(Construcao.consultarByID(id).toString());
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+
                     break;
 
                 case 4:

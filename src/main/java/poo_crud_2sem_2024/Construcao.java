@@ -52,8 +52,28 @@ public class Construcao {
         return construcoes;
     }
     
-    public static Construcao consultarByID(int id){
-        return null;
+    public static Construcao consultarByID(int id) throws SQLException, ClassNotFoundException{
+        Connection conn = getConexao();
+        String SQL = "SELECT * FROM construcoes WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(SQL);
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        rs.next();
+        
+        Construcao cst = new Construcao();
+                        
+        cst.setId(rs.getInt("id"));
+        cst.setNome(rs.getString("nome"));
+        cst.setEndereco(rs.getString("endereco"));
+        cst.setTipo(rs.getString("tipo"));
+        cst.setDataInicio(rs.getDate("data_inicio").toLocalDate());
+        cst.setDataPrevisaoTermino(rs.getDate("data_previsao_termino").toLocalDate());
+        cst.setAreaTotal_m2(rs.getInt("area_total_m2"));
+        cst.setOrcamentoTotal(rs.getDouble("orcamento_total"));
+        cst.setResponsavel(rs.getString("nome_responsavel"));
+        cst.setStatus(rs.getString("status"));
+        
+        return cst;
     }
     
     public static void atualizar(Construcao c){
