@@ -61,6 +61,22 @@ public class Construcao {
         return null;
     }
     
+    @Override
+    public String toString(){        
+        return new StringBuilder()
+            .append("ID: ").append(id).append("\n")
+            .append("Nome: ").append(nome).append("\n")
+            .append("Endereco: ").append(endereco).append("\n")
+            .append("Tipo de Construcao: ").append(tipo).append("\n")
+            .append("Data de Inicio: ").append(dataInicio).append("\n")
+            .append("Data de previsao de termino: ").append(dataPrevisaoTermino).append("\n")
+            .append("Area total (em m2): ").append(areaTotal_m2).append("\n")
+            .append("Orcamento total: ").append(orcamentoTotal).append("\n")
+            .append("Responsavel: ").append(responsavel).append("\n")
+            .append("Status: ").append(status).append("\n")
+            .toString();
+    }
+    
     //Getters e Setters
     public int getId() {
         return id;
