@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args)  {
         Construcao construcao = new Construcao();
         l();
-        construcao.conexao();
+        Construcao.testarConexao();
         Scanner sc = new Scanner(System.in);
         
         do {

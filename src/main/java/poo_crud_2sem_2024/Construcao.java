@@ -39,8 +39,12 @@ public class Construcao {
         
     }
     
+    public static void testarConexao() {
+        conexao();
+    }
+       
     //método para conectar ao banco de dados
-    public void conexao(){
+    private static Connection conexao(){
         String URL = "jdbc:postgresql://localhost:5432/banco_poo_prj1";
         String USER = "postgres";
         String PASSWORD = "admin123";
@@ -48,10 +52,13 @@ public class Construcao {
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
             if (conn != null){
                 System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
+                return conn;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        
+        return null;
     }
     
     //Getters e Setters
