@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Construcao {
-    
+
     private int         id;
     private String      nome;
     private String      endereco;
@@ -19,26 +19,26 @@ public class Construcao {
     private String      responsavel;
     private String      status;
     
-    public void cadastrar(){
+    public static void cadastrar(Construcao c){
         
     }
     
-    public List<Construcao> consultarTodos(){
+    public static List<Construcao> consultarTodos(){
         return null;
     }
     
-    public Construcao consultarByID(){
+    public static Construcao consultarByID(int id){
         return null;
     }
     
-    public void atualizar(){
+    public static void atualizar(Construcao c){
         
     }
     
-    public void deletar(){
+    public static void deletar(Construcao c){
         
     }
-
+    
     //método para conectar ao banco de dados
     public void conexao(){
         String URL = "jdbc:postgresql://localhost:5432/banco_poo_prj1";
