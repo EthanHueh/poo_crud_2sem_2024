@@ -1,13 +1,15 @@
 package poo_crud_2sem_2024;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args)  {
-        Construcao construcao = new Construcao();
+
         l();
-        Construcao.testarConexao();
+        testarConexao();
+        
         Scanner sc = new Scanner(System.in);
         
         do {
@@ -32,10 +34,20 @@ public class Main {
             }
 
             switch(opcao){
-                case 1:
+                case 1:        
                     break;
 
                 case 2:
+                    l();
+                    try {
+                        for (Construcao c: Construcao.consultarTodos()){
+                            l();
+                            System.out.println(c.toString());
+                        }
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    
                     break;
 
                 case 3:
@@ -71,6 +83,16 @@ public class Main {
     //método que imprime uma linha na tela
     public static void l(){
         System.out.println("-------------------------------------------------------------");
+    }
+
+    private static void testarConexao() {
+        try {
+            if (Construcao.hasConexao()){
+                System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
 }

@@ -2,8 +2,11 @@ package poo_crud_2sem_2024;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Construcao {
@@ -19,12 +22,34 @@ public class Construcao {
     private String      responsavel;
     private String      status;
     
-    public static void cadastrar(Construcao c){
+    public static List<Construcao> consultarTodos() throws SQLException, ClassNotFoundException {
+        List<Construcao> construcoes = new ArrayList<>();
         
-    }
-    
-    public static List<Construcao> consultarTodos(){
-        return null;
+        Connection conn = getConexao();
+        String SQL = "SELECT * FROM construcoes";
+        PreparedStatement stmt = conn.prepareStatement(SQL);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()){
+            Construcao cst = new Construcao();
+                        
+            cst.setId(rs.getInt("id"));
+            cst.setNome(rs.getString("nome"));
+            cst.setEndereco(rs.getString("endereco"));
+            cst.setTipo(rs.getString("tipo"));
+            cst.setDataInicio(rs.getDate("data_inicio").toLocalDate());
+            cst.setDataPrevisaoTermino(rs.getDate("data_previsao_termino").toLocalDate());
+            cst.setAreaTotal_m2(rs.getInt("area_total_m2"));
+            cst.setOrcamentoTotal(rs.getDouble("orcamento_total"));
+            cst.setResponsavel(rs.getString("nome_responsavel"));
+            cst.setStatus(rs.getString("status"));
+      
+            construcoes.add(cst);
+        }
+        
+        conn.close();
+
+        return construcoes;
     }
     
     public static Construcao consultarByID(int id){
@@ -39,27 +64,20 @@ public class Construcao {
         
     }
     
-    public static void testarConexao() {
-        if (getConexao() != null){
-            System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
-        }
+    public static boolean hasConexao() throws SQLException, ClassNotFoundException {       
+        return getConexao() != null;
     }
        
     //método para conectar ao banco de dados
-    private static Connection getConexao(){
+    private static Connection getConexao () throws SQLException, ClassNotFoundException {
+        String DRIVER = "org.postgresql.Driver";
         String URL = "jdbc:postgresql://localhost:5432/banco_poo_prj1";
         String USER = "postgres";
         String PASSWORD = "admin123";
-
-        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
-            if (conn != null){
-                return conn;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
         
-        return null;
+        Class.forName(DRIVER);
+
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
     
     @Override
