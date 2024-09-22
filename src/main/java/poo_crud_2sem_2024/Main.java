@@ -7,16 +7,14 @@ import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 
 public class Main {
+    
+    private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-
-        l();
+        
         testarConexao();
-        
-        Scanner sc = new Scanner(System.in);
-        
+
         do {
-            l();
             System.out.println("\nSeja bem vindo!\n");
             l();
             System.out.println("Escolha a opcao desejada:\n");
@@ -28,10 +26,11 @@ public class Main {
 
             System.out.println("6 - Sair\n");
             l();
+            
             System.out.print("Sua opcao: ");
             int opcao = 0;
             try {
-                opcao = Integer.parseInt(sc.nextLine());
+                opcao = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e){
                 System.out.println("Insira um numero!!");
             }
@@ -45,48 +44,14 @@ public class Main {
                     break;
 
                 case 3:
-                    int id = 0;
-                    try {
-                        l();
-                        System.out.print("Insira o id da construcao desejada: ");
-                        id = Integer.parseInt(sc.nextLine());
-                        l();
-                    } catch (NumberFormatException e){
-                        System.out.println("Insira um numero!!");
-                        break;
-                    }
-                    
-                    try {
-                        System.out.println(Construcao.consultarByID(id).toString());
-                    } catch (SQLException | ClassNotFoundException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-
+                    consultarByID();
                     break;
 
                 case 4:
                     break;
 
                 case 5:
-                    listarConstrucoes();
-                    l();
-                    
-                    int opcaoConstrucao = 0;
-                    try {
-                        System.out.print("Insira o nº da construcao que queira deletar: ");
-                        opcaoConstrucao = Integer.parseInt(sc.nextLine());
-                        
-                        try {
-                            Construcao.deletar(Construcao.consultarTodos().get(opcaoConstrucao - 1));
-                        } catch (SQLException | ClassNotFoundException | IndexOutOfBoundsException ex) {
-                            System.out.println(ex.getMessage());
-                        }
-                        
-                    } catch (NumberFormatException e){
-                        System.out.println("Insira um numero!!");
-                        break;
-                    }
-                    
+                    deletarConstrucao();
                     break;
 
                 case 6:
@@ -94,11 +59,11 @@ public class Main {
                     System.out.println("Deseja mesmo sair??");
                     System.out.print("Insira 's' caso queira sair: ");
 
-                    char opcaoSair = sc.nextLine().charAt(0);
+                    char opcaoSair = in.nextLine().charAt(0);
                         
                     if (Character.toLowerCase(opcaoSair) == 's'){
                         System.out.println("Até mais!!");               
-                        sc.close();
+                        in.close();
                         return;
                     }
 
@@ -119,6 +84,7 @@ public class Main {
     }
 
     private static void testarConexao() {
+        l();
         try {
             if (Construcao.hasConexao()){
                 System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
@@ -126,10 +92,10 @@ public class Main {
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
+        l();
     }
     
     public static void cadastrar() throws ClassNotFoundException, SQLException{
-        Scanner in = new Scanner(System.in);
         Construcao c = new Construcao();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("CADASTRAR");
@@ -210,6 +176,45 @@ public class Main {
             }
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+    
+    private static void consultarByID(){
+        int id = 0;
+        try {
+            l();
+            System.out.print("Insira o id da construcao desejada: ");
+            id = Integer.parseInt(in.nextLine());
+            l();
+        } catch (NumberFormatException e){
+            System.out.println("Insira um numero!!");
+            return;
+        }
+
+        try {
+            System.out.println(Construcao.consultarByID(id).toString());
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    private static void deletarConstrucao() {
+        listarConstrucoes();
+        l();
+
+        int opcaoConstrucao = 0;
+        try {
+            System.out.print("Insira o nº da construcao que queira deletar: ");
+            opcaoConstrucao = Integer.parseInt(in.nextLine());
+
+            try {
+                Construcao.deletar(Construcao.consultarTodos().get(opcaoConstrucao - 1));
+            } catch (SQLException | ClassNotFoundException | IndexOutOfBoundsException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        } catch (NumberFormatException e){
+            System.out.println("Insira um numero!!");
         }
     }
 
