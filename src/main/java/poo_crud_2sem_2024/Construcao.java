@@ -109,10 +109,45 @@ public class Construcao {
         return cst;
     }
     
-    public static void atualizar(Construcao c){
-        
-    }
+    public static Construcao atualizar(Construcao c) throws ClassNotFoundException, SQLException {
+        Connection conn = getConexao();
+        String SQL = "UPDATE construcoes SET " +
+                     "nome = ?, endereco = ?, tipo = ?, " +
+                     "data_inicio = ?, data_previsao_termino = ?, " +
+                     "area_total_m2 = ?, orcamento_total = ?, nome_responsavel = ?, status = ? " +
+                     "WHERE id = ?";
     
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+    
+        // Configurar os valores para o comando SQL
+        pstmt.setString(1, c.getNome());
+        pstmt.setString(2, c.getEndereco());
+        pstmt.setString(3, c.getTipo());
+        pstmt.setDate(4, java.sql.Date.valueOf(c.getDataInicio()));
+        pstmt.setDate(5, java.sql.Date.valueOf(c.getDataPrevisaoTermino()));
+        pstmt.setDouble(6, c.getAreaTotal_m2());
+        pstmt.setDouble(7, c.getOrcamentoTotal());
+        pstmt.setString(8, c.getResponsavel());
+        pstmt.setString(9, c.getStatus());
+    
+        // Define o ID para identificar qual registro atualizar
+        pstmt.setInt(10, c.getId());
+    
+        // Executar a atualização
+        int rowsUpdated = pstmt.executeUpdate();
+    
+        // Verificar se a atualização foi bem-sucedida
+        if (rowsUpdated > 0) {
+            System.out.println("Atualização bem-sucedida!");
+        }
+    
+        // Fechar o PreparedStatement e a conexão
+        pstmt.close();
+        conn.close();
+    
+        return c;
+    }
+     
     public static void deletar(Construcao c) throws SQLException, ClassNotFoundException {
         Connection conn = getConexao();
         String SQL = "DELETE FROM construcoes WHERE id = ?";
