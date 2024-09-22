@@ -10,7 +10,7 @@ public class Main {
     
     private static Scanner in = new Scanner(System.in);
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    public static void main(String[] args){
         
         testarConexao();
 
@@ -96,7 +96,7 @@ public class Main {
         l();
     }
     
-    public static void cadastrar() throws ClassNotFoundException, SQLException{
+    public static void cadastrar(){
         Construcao c = new Construcao();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("------------------------- CADASTRAR -------------------------");
@@ -162,8 +162,12 @@ public class Main {
         System.out.println("Insira o status atual da construcao: ");
         String status = in.nextLine();
         c.setStatus(status);
-
-        Construcao.inserir(c);
+        
+        try {
+            Construcao.inserir(c);
+        } catch (SQLException | ClassNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     private static void consultarTodasConstrucoes() {
@@ -198,7 +202,7 @@ public class Main {
         }
     }
     
-    public static void atualizar() throws ClassNotFoundException, SQLException{
+    public static void atualizar(){
         Construcao c = new Construcao();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("------------------------- ATUALIZAR -------------------------");
@@ -285,7 +289,11 @@ public class Main {
         String status = in.nextLine();
         c.setStatus(status);
 
-        Construcao.atualizar(c);
+        try {
+            Construcao.atualizar(c);
+        } catch (SQLException | ClassNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     private static void deletarConstrucao() {
