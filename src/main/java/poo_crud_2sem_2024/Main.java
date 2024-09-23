@@ -161,7 +161,6 @@ public class Main {
 
         System.out.println("Insira o nome do responsavel da construcao: ");
         String responsavel = in.nextLine();
-        responsavel = in.nextLine();
         c.setResponsavel(responsavel);
         
         System.out.println("Insira o status atual da construcao: ");
@@ -176,7 +175,7 @@ public class Main {
     }
 
     private static void consultarTodasConstrucoes() {
-        l();
+        System.out.println("---------------------- CONSULTAR TODOS ----------------------");
         
         try {
             for (Construcao c: Construcao.consultarTodos()){
@@ -189,6 +188,7 @@ public class Main {
     }
     
     private static void consultarByID(){
+        System.out.println("---------------------- CONSULTA POR ID ----------------------");
         int id = consistirInteiro();
 
         try {
@@ -267,9 +267,9 @@ public class Main {
     }
 
     private static void deletarConstrucao() {
+        System.out.println("-------------------------- DELETAR --------------------------");
         listarConstrucoes();
-        l();
-
+        
         System.out.print("Insira o nº da construcao que queira deletar: ");
         int opcaoConstrucao = consistirInteiro();
         
