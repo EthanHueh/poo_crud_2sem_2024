@@ -175,7 +175,7 @@ public class Construcao {
     }
     
     @Override
-    public String toString(){        
+    public String toString(){
         return new StringBuilder()
             .append("ID: ").append(id).append("\n")
             .append("Nome: ").append(nome).append("\n")
