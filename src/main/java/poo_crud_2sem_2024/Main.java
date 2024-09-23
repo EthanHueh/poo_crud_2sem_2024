@@ -152,8 +152,8 @@ public class Main {
     }
     
     // Método para mudar a cor do texto no Windows
-    private static void setTextColorWindows(int color) {
-        String cmd = String.format("cmd /c color %X", color);
+    private static void setTextColorWindows(int textColor) {
+        String cmd = String.format("color %X%X", 0, textColor);
         try {
             new ProcessBuilder("cmd", "/c", cmd).inheritIO().start().waitFor();
         } catch (Exception e) {
