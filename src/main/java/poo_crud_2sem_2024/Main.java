@@ -8,7 +8,8 @@ import java.time.LocalDate;
 
 public class Main {
     
-    private static Scanner in = new Scanner(System.in);
+    private static final Scanner in = new Scanner(System.in);
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static void main(String[] args){
         
@@ -28,12 +29,7 @@ public class Main {
             l();
             
             System.out.print("Sua opcao: ");
-            int opcao = 0;
-            try {
-                opcao = Integer.parseInt(in.nextLine());
-            } catch (NumberFormatException e){
-                System.out.println("Insira um numero!!");
-            }
+            int opcao = consistirInteiro();
 
             switch(opcao){
                 case 1:
@@ -83,7 +79,7 @@ public class Main {
     public static void l(){
         System.out.println("-------------------------------------------------------------");
     }
-
+    
     private static void testarConexao() {
         l();
         try {
@@ -96,9 +92,45 @@ public class Main {
         l();
     }
     
+    private static int consistirInteiro(){
+        do {
+            try {
+                return Integer.parseInt(in.nextLine());
+            } catch (NumberFormatException e){
+                System.out.println("Insira um numero!!");
+            }
+        }
+        while (true);
+    }
+    
+    private static double consistirDouble() {
+        do {
+            try {
+                return Double.parseDouble(in.nextLine());
+            } catch (NumberFormatException e){
+                System.out.println("Insira um numero!!");
+            }
+        }
+        while (true);
+    }
+    
+    private static LocalDate consistirData() {
+        
+        
+        do {
+            try {
+                // Converte a string para LocalDate
+                return LocalDate.parse(in.nextLine(), formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Data inválida, tente novamente no formato dd/MM/yyyy.");
+            }
+        } while (true);
+        
+    }
+    
     public static void cadastrar(){
         Construcao c = new Construcao();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
         System.out.println("------------------------- CADASTRAR -------------------------");
 
         System.out.println("Insira o nome da construcao: ");
@@ -113,45 +145,20 @@ public class Main {
         String tipo = in.nextLine();
         c.setTipo(tipo);  
 
-        LocalDate dataInicio = null;
-        boolean dataValida = false;
-
-        while (!dataValida) {
-            System.out.println("Insira a data de inicio da construcao (dd/MM/yyyy): ");
-            String dataStr = in.nextLine();
-
-            try {
-                // Converte a string para LocalDate
-                dataInicio = LocalDate.parse(dataStr, formatter);
-                dataValida = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Data inválida, tente novamente no formato dd/MM/yyyy.");
-            }
-        }
+        System.out.println("Insira a data de inicio da construcao (dd/MM/yyyy): ");
+        LocalDate dataInicio = consistirData();
         c.setDataInicio(dataInicio);
 
-        LocalDate dataTermino = null;
-        dataValida = false;
-        while (!dataValida) {
-            System.out.println("Insira a data de previsao de termino da construcao (dd/MM/yyyy): ");
-            String dataStr = in.nextLine();
-
-            try {
-                // Converte a string para LocalDate
-                dataTermino = LocalDate.parse(dataStr, formatter);
-                dataValida = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Data inválida, tente novamente no formato dd/MM/yyyy.");
-            }
-        }
+        System.out.println("Insira a data de previsao de termino da construcao (dd/MM/yyyy): ");
+        LocalDate dataTermino = consistirData();
         c.setDataPrevisaoTermino(dataTermino);
 
         System.out.println("Insira a area em metros quadrados: ");
-        int area = in.nextInt();
+        int area = consistirInteiro();
         c.setAreaTotal_m2(area); 
 
         System.out.println("Insira o orcamento total da contrucao: ");
-        double orcamento = in.nextDouble();
+        double orcamento = consistirDouble();
         c.setOrcamentoTotal(orcamento); 
 
         System.out.println("Insira o nome do responsavel da construcao: ");
@@ -184,16 +191,7 @@ public class Main {
     }
     
     private static void consultarByID(){
-        int id = 0;
-        try {
-            l();
-            System.out.print("Insira o id da construcao desejada: ");
-            id = Integer.parseInt(in.nextLine());
-            l();
-        } catch (NumberFormatException e){
-            System.out.println("Insira um numero!!");
-            return;
-        }
+        int id = consistirInteiro();
 
         try {
             System.out.println(Construcao.consultarByID(id).toString());
@@ -204,14 +202,13 @@ public class Main {
     
     public static void atualizar(){
         Construcao c = new Construcao();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("------------------------- ATUALIZAR -------------------------");
 
         //consistir para a sua construção
         boolean isSuaConstrucao = false;
         while(isSuaConstrucao){
             System.out.println("Insira o ID da construcao que quer atualizar: ");
-            int id = in.nextInt();
+            int id = consistirInteiro();
             l();
             try {
                 System.out.println(Construcao.consultarByID(id).toString());
@@ -239,50 +236,24 @@ public class Main {
         String tipo = in.nextLine();
         c.setTipo(tipo);  
 
-        LocalDate dataInicio = null;
-        boolean dataValida = false;
-
-        while (!dataValida) {
-            System.out.println("Insira a nova data de inicio da construcao (dd/MM/yyyy): ");
-            String dataStr = in.nextLine();
-
-            try {
-                // Converte a string para LocalDate
-                dataInicio = LocalDate.parse(dataStr, formatter);
-                dataValida = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Data inválida, tente novamente no formato dd/MM/yyyy.");
-            }
-        }
+        System.out.println("Insira a nova data de inicio da construcao (dd/MM/yyyy): ");
+        LocalDate dataInicio = consistirData();
         c.setDataInicio(dataInicio);
 
-        LocalDate dataTermino = null;
-        dataValida = false;
-        while (!dataValida) {
-            System.out.println("Insira a nova data de previsao de termino da construcao (dd/MM/yyyy): ");
-            String dataStr = in.nextLine();
-
-            try {
-                // Converte a string para LocalDate
-                dataTermino = LocalDate.parse(dataStr, formatter);
-                dataValida = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Data inválida, tente novamente no formato dd/MM/yyyy.");
-            }
-        }
+        System.out.println("Insira a nova data de previsao de termino da construcao (dd/MM/yyyy): ");
+        LocalDate dataTermino = consistirData();
         c.setDataPrevisaoTermino(dataTermino);
 
         System.out.println("Insira a nova area em metros quadrados: ");
-        int area = in.nextInt();
+        int area = consistirInteiro();
         c.setAreaTotal_m2(area); 
 
         System.out.println("Insira o novo orcamento total da contrucao: ");
-        double orcamento = in.nextDouble();
+        double orcamento = consistirDouble();
         c.setOrcamentoTotal(orcamento); 
 
         System.out.println("Insira o novo nome do responsavel da construcao: ");
         String responsavel = in.nextLine();
-        responsavel = in.nextLine();
         c.setResponsavel(responsavel);
         
         System.out.println("Insira o novo status atual da construcao: ");
@@ -300,20 +271,15 @@ public class Main {
         listarConstrucoes();
         l();
 
-        int opcaoConstrucao = 0;
+        System.out.print("Insira o nº da construcao que queira deletar: ");
+        int opcaoConstrucao = consistirInteiro();
+        
         try {
-            System.out.print("Insira o nº da construcao que queira deletar: ");
-            opcaoConstrucao = Integer.parseInt(in.nextLine());
-
-            try {
-                Construcao.deletar(Construcao.consultarTodos().get(opcaoConstrucao - 1));
-            } catch (SQLException | ClassNotFoundException | IndexOutOfBoundsException ex) {
-                System.out.println(ex.getMessage());
-            }
-
-        } catch (NumberFormatException e){
-            System.out.println("Insira um numero!!");
+            Construcao.deletar(Construcao.consultarTodos().get(opcaoConstrucao - 1));
+        } catch (SQLException | ClassNotFoundException | IndexOutOfBoundsException ex) {
+            System.out.println(ex.getMessage());
         }
+        
     }
 
     private static void listarConstrucoes() {
