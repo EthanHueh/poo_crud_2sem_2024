@@ -115,8 +115,6 @@ public class Main {
     }
     
     private static LocalDate consistirData() {
-        
-        
         do {
             try {
                 // Converte a string para LocalDate
@@ -205,8 +203,7 @@ public class Main {
         System.out.println("------------------------- ATUALIZAR -------------------------");
 
         //consistir para a sua construção
-        boolean isSuaConstrucao = false;
-        while(isSuaConstrucao){
+        do {
             System.out.println("Insira o ID da construcao que quer atualizar: ");
             int id = consistirInteiro();
             l();
@@ -217,12 +214,14 @@ public class Main {
             }
             System.out.println("\nEstá é a construcao que deseja atualizar?(s/n) ");
             char opcaoSair = in.nextLine().charAt(0);    
-                if (Character.toLowerCase(opcaoSair) == 's'){
-                    isSuaConstrucao = true;            
+                if (Character.toLowerCase(opcaoSair) == 's'){         
                     c.setId(id);
+                    break;
                 }
             l();
+            
         }
+        while(true);
 
         System.out.println("Insira o novo nome da construcao: ");
         String nome = in.nextLine();
