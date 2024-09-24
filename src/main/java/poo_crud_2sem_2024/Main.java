@@ -92,7 +92,9 @@ public class Main {
                     char opcaoSair = in.nextLine().charAt(0);
                         
                     if (Character.toLowerCase(opcaoSair) == 's'){
+                        term.l();
                         System.out.println("Até mais!!");
+                        term.pausarPrograma();
                         term.limparTerminal();               
                         in.close();
                         return;
@@ -124,39 +126,39 @@ public class Main {
         
         System.out.println("------------------------- CADASTRAR -------------------------");
 
-        System.out.println("Insira o nome da nova construcao: ");
+        System.out.print("Insira o nome da nova construcao: ");
         String nome = in.nextLine();
         c.setNome(nome);
 
-        System.out.println("Insira o endereco da nova construcao: ");
+        System.out.print("Insira o endereco da nova construcao: ");
         String endereco = in.nextLine();
         c.setEndereco(endereco);
 
-        System.out.println("Insira o tipo da nova construcao: ");
+        System.out.print("Insira o tipo da nova construcao: ");
         String tipo = in.nextLine();
         c.setTipo(tipo);  
 
-        System.out.println("Insira a data de inicio da nova construcao (dd/MM/yyyy): ");
+        System.out.print("Insira a data de inicio da nova construcao (dd/MM/yyyy): ");
         LocalDate dataInicio = term.consistirData();
         c.setDataInicio(dataInicio);
 
-        System.out.println("Insira a data de previsao de termino da nova construcao (dd/MM/yyyy): ");
+        System.out.print("Insira a data de previsao de termino da nova construcao (dd/MM/yyyy): ");
         LocalDate dataTermino = term.consistirData();
         c.setDataPrevisaoTermino(dataTermino);
 
-        System.out.println("Insira a area em metros quadrados: ");
+        System.out.print("Insira a area em metros quadrados: ");
         int area = term.consistirInteiro();
         c.setAreaTotal_m2(area); 
 
-        System.out.println("Insira o orcamento total da nova contrucao: ");
+        System.out.print("Insira o orcamento total da nova contrucao: ");
         double orcamento = term.consistirDouble();
         c.setOrcamentoTotal(orcamento); 
 
-        System.out.println("Insira o nome do responsavel da  nova construcao: ");
+        System.out.print("Insira o nome do responsavel da  nova construcao: ");
         String responsavel = in.nextLine();
         c.setResponsavel(responsavel);
         
-        System.out.println("Insira o status atual da construcao: ");
+        System.out.print("Insira o status atual da construcao: ");
         String status = in.nextLine();
         c.setStatus(status);
         
@@ -190,7 +192,7 @@ public class Main {
     
     private static void consultarByID(){
         System.out.println("---------------------- CONSULTA POR ID ----------------------");
-        System.out.println("Digite o ID da construcao que quer consultar");
+        System.out.print("Digite o ID da construcao que quer consultar: ");
         int id = term.consistirInteiro();
         term.l();
         try {
@@ -200,7 +202,7 @@ public class Main {
             term.limparTerminal();
             term.l();
             System.out.println("Falha ao consultar o cadastro.");
-            System.out.println("tenha certeza que o cadastro com esse ID exista!");
+            System.out.println("Tenha certeza que o cadastro com esse ID exista!");
             term.l();
         }
     }
@@ -218,12 +220,12 @@ public class Main {
                 System.out.println(Construcao.consultarByID(id).toString());
             } catch (SQLException | ClassNotFoundException ex) {
                 System.out.println("Falha ao consultar o cadastro.");
-                System.out.println("tenha certeza que o cadastro com esse ID exista!");
+                System.out.println("Tenha certeza que o cadastro com esse ID exista!");
                 term.l();
                 return;
             }
             term.l();
-            System.out.println("\nEsta é a construcao que deseja atualizar?(s/n) ");
+            System.out.print("\nEsta é a construcao que deseja atualizar?(s/n) ");
             char opcaoSair = in.nextLine().charAt(0);    
                 if (Character.toLowerCase(opcaoSair) == 's'){         
                     c.setId(id);
@@ -235,39 +237,39 @@ public class Main {
         }
         while(true);
 
-        System.out.println("Insira o novo nome da construcao: ");
+        System.out.print("Insira o novo nome da construcao: ");
         String nome = in.nextLine();
         c.setNome(nome);
 
-        System.out.println("Insira o novo endereco da construcao: ");
+        System.out.print("Insira o novo endereco da construcao: ");
         String endereco = in.nextLine();
         c.setEndereco(endereco);
 
-        System.out.println("Insira o novo tipo da construcao: ");
+        System.out.print("Insira o novo tipo da construcao: ");
         String tipo = in.nextLine();
         c.setTipo(tipo);  
 
-        System.out.println("Insira a nova data de inicio da construcao (dd/MM/yyyy): ");
+        System.out.print("Insira a nova data de inicio da construcao (dd/MM/yyyy): ");
         LocalDate dataInicio = term.consistirData();
         c.setDataInicio(dataInicio);
 
-        System.out.println("Insira a nova data de previsao de termino da construcao (dd/MM/yyyy): ");
+        System.out.print("Insira a nova data de previsao de termino da construcao (dd/MM/yyyy): ");
         LocalDate dataTermino = term.consistirData();
         c.setDataPrevisaoTermino(dataTermino);
 
-        System.out.println("Insira a nova area em metros quadrados: ");
+        System.out.print("Insira a nova area em metros quadrados: ");
         int area = term.consistirInteiro();
         c.setAreaTotal_m2(area); 
 
-        System.out.println("Insira o novo orcamento total da contrucao: ");
+        System.out.print("Insira o novo orcamento total da contrucao: ");
         double orcamento = term.consistirDouble();
         c.setOrcamentoTotal(orcamento); 
 
-        System.out.println("Insira o novo nome do responsavel da construcao: ");
+        System.out.print("Insira o novo nome do responsavel da construcao: ");
         String responsavel = in.nextLine();
         c.setResponsavel(responsavel);
         
-        System.out.println("Insira o novo status atual da construcao: ");
+        System.out.print("Insira o novo status atual da construcao: ");
         String status = in.nextLine();
         c.setStatus(status);
 
@@ -301,7 +303,7 @@ public class Main {
             term.limparTerminal();
             term.l();
             System.out.println("Falha ao deletar o cadastro.");
-            System.out.println("Lembre-se de escolher um dos itens da lista que lhe eh mostrada");
+            System.out.println("Lembre-se de escolher um dos itens da lista que lhe eh mostrada.");
             term.l();
         }
         
@@ -316,7 +318,7 @@ public class Main {
             }
         } catch (SQLException | ClassNotFoundException ex) {
             term.l();
-            System.out.println("Falha ao consultar os cadastros");
+            System.out.println("Falha ao consultar os cadastros.");
             term.l();
         }
     }
