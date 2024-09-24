@@ -14,6 +14,14 @@ public class Main {
         term.setTextColor(15);
         term.l();
         testarConexao();
+        term.l();
+        
+        System.out.println("\nPersistenca sem DAO");
+        System.out.println("POO - 2o semestre/2024\n");
+        System.out.println("Feito por:");
+        System.out.println("- Fabio Casagrande");
+        System.out.println("- Nattan Silva de Souza\n");
+        
 
         do {
             term.l();
