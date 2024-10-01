@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Construcao {
     private String      responsavel;
     private String      status;
 
-    public static Construcao inserir(Construcao c) throws ClassNotFoundException, SQLException{
+    public static void inserir(Construcao c) throws ClassNotFoundException, SQLException{
         Connection conn = getConexao();
         String SQL = "INSERT INTO construcoes" +
                      "(nome, endereco, tipo," +
@@ -52,7 +53,6 @@ public class Construcao {
         // Fechar o PreparedStatement e a conexão
         pstmt.close();
         conn.close();
-        return c;
     }
     
     public static List<Construcao> consultarTodos() throws SQLException, ClassNotFoundException {
@@ -109,7 +109,7 @@ public class Construcao {
         return cst;
     }
     
-    public static Construcao atualizar(Construcao c) throws ClassNotFoundException, SQLException {
+    public static void atualizar(Construcao c) throws ClassNotFoundException, SQLException {
         Connection conn = getConexao();
         String SQL = "UPDATE construcoes SET " +
                      "nome = ?, endereco = ?, tipo = ?, " +
@@ -144,8 +144,6 @@ public class Construcao {
         // Fechar o PreparedStatement e a conexão
         pstmt.close();
         conn.close();
-    
-        return c;
     }
      
     public static void deletar(Construcao c) throws SQLException, ClassNotFoundException {
@@ -176,13 +174,16 @@ public class Construcao {
     
     @Override
     public String toString(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         return new StringBuilder()
             .append("ID: ").append(id).append("\n")
             .append("Nome: ").append(nome).append("\n")
             .append("Endereco: ").append(endereco).append("\n")
             .append("Tipo de Construcao: ").append(tipo).append("\n")
-            .append("Data de Inicio: ").append(dataInicio).append("\n")
-            .append("Data de previsao de termino: ").append(dataPrevisaoTermino).append("\n")
+            .append("Data de Inicio: ").append(formatter.format(dataInicio)).append("\n")
+            .append("Data de previsao de termino: ").append(formatter.format(dataPrevisaoTermino)).append("\n")
             .append("Area total (em m2): ").append(areaTotal_m2).append("\n")
             .append("Orcamento total: ").append(orcamentoTotal).append("\n")
             .append("Responsavel: ").append(responsavel).append("\n")
