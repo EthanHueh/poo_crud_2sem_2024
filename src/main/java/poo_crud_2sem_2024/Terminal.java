@@ -9,6 +9,7 @@ public class Terminal {
     
     private final Scanner in = new Scanner(System.in);
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final String systemName = System.getProperty("os.name");
     
     public int consistirInteiro(){
         do {
@@ -51,7 +52,7 @@ public class Terminal {
     
     public void limparTerminal() {
         try {
-            if (System.getProperty("os.name").contains("Windows")) {
+            if (systemName.contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
@@ -63,7 +64,7 @@ public class Terminal {
 
     public void pausarPrograma() {
         try {
-            if (System.getProperty("os.name").contains("Windows")) {
+            if (systemName.contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "pause").inheritIO().start().waitFor();
             } else {
                 System.out.println("Pressione Enter para continuar...");
@@ -76,7 +77,8 @@ public class Terminal {
 
     // Função para trocar a cor do texto
     public void setTextColor(int color) {
-        boolean isWindows = System.getProperty("os.name").toLowerCase().contains("windows");
+        boolean isWindows = systemName.toLowerCase().contains("windows");
+        
         if (isWindows) {
             setTextColorWindows(color);
         } else {
