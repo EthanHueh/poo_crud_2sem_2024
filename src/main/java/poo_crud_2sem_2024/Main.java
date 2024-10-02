@@ -16,15 +16,17 @@ public class Main {
         term.l();
         testarConexao();
         term.l();
-        
-        System.out.println("\nPersistenca sem DAO");
+        System.out.println("\nPersistenca com DAO");
         System.out.println("POO - 2o semestre/2024\n");
         System.out.println("Feito por:");
         System.out.println("- Fabio Casagrande");
         System.out.println("- Nattan Silva de Souza\n");
-        
+        term.l();
 
+        term.pausarPrograma();
+        
         do {
+            term.limparTerminal();
             term.l();
             System.out.println("\nSeja bem vindo!\n");
             term.l();
@@ -52,44 +54,29 @@ public class Main {
                     term.limparTerminal();
                     term.setTextColor(2);
                     cadastrar();
-                    term.setTextColor(15);
-                    term.pausarPrograma();
-                    term.limparTerminal();
                     break;
                 case 2:
                     term.limparTerminal();
                     term.setTextColor(13);
                     consultarTodasConstrucoes();
-                    term.setTextColor(15);
-                    term.pausarPrograma();
-                    term.limparTerminal();
                     break;
 
                 case 3:
                     term.limparTerminal();
                     term.setTextColor(14);
                     consultarByID();
-                    term.setTextColor(15);
-                    term.pausarPrograma();
-                    term.limparTerminal();
                     break;
 
                 case 4:
                     term.limparTerminal();
                     term.setTextColor(11);
                     atualizar();
-                    term.setTextColor(15);
-                    term.pausarPrograma();
-                    term.limparTerminal();
                     break;
 
                 case 5:
                     term.limparTerminal();
                     term.setTextColor(4);
                     deletarConstrucao();
-                    term.setTextColor(15);
-                    term.pausarPrograma();
-                    term.limparTerminal();
                     break;
 
                 case 6:
@@ -108,13 +95,16 @@ public class Main {
                         in.close();
                         return;
                     }
-                    term.limparTerminal();
                     break;
                     
                 default:
                     System.out.println("Insira uma opcao valida!!");
 
             }
+
+            term.setTextColor(15);
+            term.pausarPrograma();
+            term.limparTerminal();
             
         }
         while(true);
@@ -226,7 +216,7 @@ public class Main {
         // consistir para a sua construção
         do {
             System.out.println("------------------------- ATUALIZAR -------------------------");
-            System.out.println("Insira o ID da construcao que quer atualizar: ");
+            System.out.print("Insira o ID da construcao que quer atualizar: ");
     
             int id = term.consistirInteiro();
             c.setId(id);
@@ -271,82 +261,73 @@ public class Main {
             System.out.println("  8 - Responsavel");
             System.out.println("  9 - Status");
             System.out.println("  0 - Finalizar Atualizacao");
+            System.out.println(" -1 - Descartar alteracoes");
+            
             term.l();
             System.out.print("Opcao: ");
-    
             int opcao = term.consistirInteiro();
+            term.l();
     
             switch (opcao) {
                 case 1:
-                    term.l();
                     System.out.print("Insira o novo nome da construcao: ");
                     String nome = in.nextLine();
                     c.setNome(nome);
-                    term.limparTerminal();
                     break;
                 case 2:
-                    term.l();
                     System.out.print("Insira o novo endereco da construcao: ");
                     String endereco = in.nextLine();
                     c.setEndereco(endereco);
-                    term.limparTerminal();
                     break;
                 case 3:
-                    term.l();
                     System.out.print("Insira o novo tipo da construcao: ");
                     String tipo = in.nextLine();
                     c.setTipo(tipo);
-                    term.limparTerminal();
                     break;
                 case 4:
-                    term.l();
                     System.out.print("Insira a nova data de inicio da construcao (dd/MM/yyyy): ");
                     LocalDate dataInicio = term.consistirData();
                     c.setDataInicio(dataInicio);
-                    term.limparTerminal();
                     break;
                 case 5:
-                    term.l();
                     System.out.print("Insira a nova data de previsao de termino da construcao (dd/MM/yyyy): ");
                     LocalDate dataTermino = term.consistirData();
                     c.setDataPrevisaoTermino(dataTermino);
-                    term.limparTerminal();
                     break;
                 case 6:
-                    term.l();
                     System.out.print("Insira a nova area em metros quadrados: ");
                     int area = term.consistirInteiro();
                     c.setAreaTotal_m2(area);
-                    term.limparTerminal();
                     break;
                 case 7:
-                    term.l();
                     System.out.print("Insira o novo orcamento total da construcao: ");
                     double orcamento = term.consistirDouble();
                     c.setOrcamentoTotal(orcamento);
-                    term.limparTerminal();
                     break;
                 case 8:
-                    term.l();
                     System.out.print("Insira o novo nome do responsavel da construcao: ");
                     String responsavel = in.nextLine();
                     c.setResponsavel(responsavel);
-                    term.limparTerminal();
                     break;
                 case 9:
-                    term.l();
                     System.out.print("Insira o novo status atual da construcao: ");
                     String status = in.nextLine();
                     c.setStatus(status);
-                    term.limparTerminal();
                     break;
                 case 0:
                     continuar = false;
                     break;
+                case -1:
+                    System.out.println("Atualizacao cancelada.");
+                    term.pausarPrograma();
+                    return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
+                    term.pausarPrograma();
                     break;
             }
+
+            term.limparTerminal();
         }
     
         try {
