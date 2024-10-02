@@ -71,28 +71,25 @@ public class ConstrucaoDAO {
         return construcoes;
     }
     
-    public Construcao consultarByID(int id) throws SQLException, ClassNotFoundException{
+    public Construcao consultarByID(Construcao c) throws SQLException, ClassNotFoundException{
         Connection conn = ConexaoFactory.getConexao();
         String SQL = "SELECT * FROM construcoes WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(SQL);
-        stmt.setInt(1, id);
+        stmt.setInt(1, c.getId());
         ResultSet rs = stmt.executeQuery();
         rs.next();
-        
-        Construcao cst = new Construcao();
                         
-        cst.setId(rs.getInt("id"));
-        cst.setNome(rs.getString("nome"));
-        cst.setEndereco(rs.getString("endereco"));
-        cst.setTipo(rs.getString("tipo"));
-        cst.setDataInicio(rs.getDate("data_inicio").toLocalDate());
-        cst.setDataPrevisaoTermino(rs.getDate("data_previsao_termino").toLocalDate());
-        cst.setAreaTotal_m2(rs.getInt("area_total_m2"));
-        cst.setOrcamentoTotal(rs.getDouble("orcamento_total"));
-        cst.setResponsavel(rs.getString("nome_responsavel"));
-        cst.setStatus(rs.getString("status"));
+        c.setNome(rs.getString("nome"));
+        c.setEndereco(rs.getString("endereco"));
+        c.setTipo(rs.getString("tipo"));
+        c.setDataInicio(rs.getDate("data_inicio").toLocalDate());
+        c.setDataPrevisaoTermino(rs.getDate("data_previsao_termino").toLocalDate());
+        c.setAreaTotal_m2(rs.getInt("area_total_m2"));
+        c.setOrcamentoTotal(rs.getDouble("orcamento_total"));
+        c.setResponsavel(rs.getString("nome_responsavel"));
+        c.setStatus(rs.getString("status"));
         
-        return cst;
+        return c;
     }
     
     public void atualizar(Construcao c) throws ClassNotFoundException, SQLException {

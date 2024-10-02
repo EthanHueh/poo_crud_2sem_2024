@@ -202,10 +202,14 @@ public class Main {
     private static void consultarByID(){
         System.out.println("---------------------- CONSULTA POR ID ----------------------");
         System.out.print("Digite o ID da construcao que quer consultar: ");
+
         int id = term.consistirInteiro();
+        Construcao c = new Construcao();
+        c.setId(id);
+
         term.l();
         try {
-            System.out.println("\n"+conDAO.consultarByID(id).toString());
+            System.out.println("\n"+conDAO.consultarByID(c).toString());
             term.l();
         } catch (SQLException | ClassNotFoundException ex) {
             term.limparTerminal();
@@ -223,10 +227,13 @@ public class Main {
         do {
             System.out.println("------------------------- ATUALIZAR -------------------------");
             System.out.println("Insira o ID da construcao que quer atualizar: ");
+
             int id = term.consistirInteiro();
+            c.setId(id);
+            
             term.l();
             try {
-                System.out.println(conDAO.consultarByID(id).toString());
+                System.out.println(conDAO.consultarByID(c).toString());
             } catch (SQLException | ClassNotFoundException ex) {
                 System.out.println("Falha ao consultar o cadastro.");
                 System.out.println("Tenha certeza que o cadastro com esse ID exista!");
