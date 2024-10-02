@@ -1,6 +1,7 @@
 package poo_crud_2sem_2024;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
 
@@ -174,12 +175,45 @@ public class Main {
     }
 
     private static void consultarTodasConstrucoes() {
+
         System.out.println("---------------------- CONSULTAR TODOS ----------------------");
-        
+
+        System.out.println("Escolha a opcao desejada:\n");
+        System.out.println("1 - Exibicao simples");
+        System.out.println("2 - Exibicao completa\n");
+
+        System.out.print("Sua opcao: ");
+        int opcao = term.consistirInteiro();
+
         try {
-            for (Construcao c: conDAO.consultarTodos()){
-                System.out.println("\n"+c.toString());
-                term.l();
+            term.limparTerminal();
+
+            List<Construcao> construcoes = conDAO.consultarTodos();
+
+            term.l();
+            System.out.println("Numero de registros retornados: "+conDAO.consultarTodos().size());
+            term.l();
+            
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("\tID\t|\tNOME");
+                    System.out.println("----------------|--------------------------------------------");
+                    for (Construcao c: construcoes){
+                        System.out.println("\t"+c.getId()+"\t|\t"+c.getNome());
+                    }
+                    term.l();
+                    break;
+                
+                case 2:
+                    for (Construcao c: construcoes){
+                        System.out.println("\n"+c.toString());
+                        term.l();
+                    }
+                    break;
+            
+                default:
+                    break;
             }
         } catch (SQLException | ClassNotFoundException ex) {
             term.limparTerminal();
@@ -343,20 +377,44 @@ public class Main {
     }
     
     private static void deletarConstrucao() {
-        System.out.println("-------------------------- DELETAR --------------------------");
-        System.out.println("Construcoes cadastradas:");
-        term.l();
-        listarConstrucoes();
-        term.l();
-        System.out.print("Insira o nº da construcao que queira deletar: ");
-        int opcaoConstrucao = term.consistirInteiro();
-        
+
+        Construcao c = new Construcao();
+        do {
+            System.out.println("-------------------------- DELETAR --------------------------");
+            System.out.print("Insira o ID da construcao que queira deletar: ");
+    
+            int id = term.consistirInteiro();
+            c.setId(id);
+    
+            term.l();
+            try {
+                Construcao construcaoExistente = conDAO.consultarByID(c);
+                System.out.println("\n"+construcaoExistente.toString());
+                c = construcaoExistente; // recupera os dados da construção existente
+            } catch (SQLException | ClassNotFoundException ex) {
+                System.out.println("Falha ao consultar o cadastro.");
+                System.out.println("Tenha certeza que o cadastro com esse ID exista!");
+                term.l();
+                return;
+            }
+            term.l();
+            System.out.print("\nEsta é a construcao que deseja deletar?(s/n) ");
+            char opcaoSair = in.nextLine().charAt(0);
+            if (Character.toLowerCase(opcaoSair) == 's') {
+                c.setId(id);
+                break;
+            }
+            term.l();
+            term.limparTerminal();
+
+        } while (true);
+ 
         try {
-            conDAO.deletar(conDAO.consultarTodos().get(opcaoConstrucao - 1));
+            conDAO.deletar(c);
             term.l();
             System.out.println("Cadastro da construcao foi deletado com sucesso!");
             term.l();
-        } catch (SQLException | ClassNotFoundException | IndexOutOfBoundsException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             term.limparTerminal();
             term.l();
             System.out.println("Falha ao deletar o cadastro.");
@@ -364,20 +422,6 @@ public class Main {
             term.l();
         }
         
-    }
-
-    private static void listarConstrucoes() {
-        try {
-            int contador = 1;
-            for (Construcao c: conDAO.consultarTodos()){
-                System.out.println("   "+contador+" - "+c.getNome());
-                contador++;
-            }
-        } catch (SQLException | ClassNotFoundException ex) {
-            term.l();
-            System.out.println("Falha ao consultar os cadastros.");
-            term.l();
-        }
     }
     
 }
