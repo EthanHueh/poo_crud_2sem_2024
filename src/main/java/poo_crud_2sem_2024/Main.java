@@ -181,7 +181,7 @@ public class Main {
         System.out.println("Escolha a opcao desejada:\n");
         System.out.println("1 - Exibicao simples");
         System.out.println("2 - Exibicao completa\n");
-
+        term.l();
         System.out.print("Sua opcao: ");
         int opcao = term.consistirInteiro();
 
@@ -206,10 +206,15 @@ public class Main {
                     break;
                 
                 case 2:
-                    for (Construcao c: construcoes){
-                        System.out.println("\n"+c.toString());
-                        term.l();
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.println("\tID  \t|\tNOME                \t|\tENDERECO                    \t|\tTIPO       \t|\tDATA INICIO\t|\tPREV. TERMINO \t|\tAREA   \t\t|\tORCAMENTO  \t|\tRESPONSAVEL \t|\t    STATUS");     
+                    System.out.println("----------------|-------------------------------|---------------------------------------|-----------------------|-----------------------|-----------------------|-----------------------|-----------------------|-----------------------|----------------------------");
+
+                    for (Construcao c : construcoes) {
+                        System.out.println(c.toLinhaTabela());
                     }
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
                     break;
             
                 default:
@@ -352,8 +357,10 @@ public class Main {
                     continuar = false;
                     break;
                 case -1:
+                    term.limparTerminal();
+                    term.l();
                     System.out.println("Atualizacao cancelada.");
-                    term.pausarPrograma();
+                    term.l();
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
