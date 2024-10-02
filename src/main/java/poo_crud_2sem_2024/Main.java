@@ -8,6 +8,7 @@ public class Main {
     
     private static final Scanner in = new Scanner(System.in);
     private static final Terminal term = new Terminal();
+    private static final ConstrucaoDAO conDAO = new ConstrucaoDAO();
 
     public static void main(String[] args){
         term.limparTerminal();
@@ -121,7 +122,7 @@ public class Main {
 
     private static void testarConexao() {
         try {
-            if (Construcao.hasConexao()){
+            if (ConexaoFactory.getConexao() != null){
                 System.out.println("Conectado ao Banco de Dados PostgreSQL com sucesso!!");
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -172,7 +173,7 @@ public class Main {
         
         try {
             term.l();
-            Construcao.inserir(c);
+            conDAO.inserir(c);
             term.l();
         } catch (SQLException | ClassNotFoundException ex){
             term.limparTerminal();
@@ -186,7 +187,7 @@ public class Main {
         System.out.println("---------------------- CONSULTAR TODOS ----------------------");
         
         try {
-            for (Construcao c: Construcao.consultarTodos()){
+            for (Construcao c: conDAO.consultarTodos()){
                 System.out.println("\n"+c.toString());
                 term.l();
             }
@@ -204,7 +205,7 @@ public class Main {
         int id = term.consistirInteiro();
         term.l();
         try {
-            System.out.println("\n"+Construcao.consultarByID(id).toString());
+            System.out.println("\n"+conDAO.consultarByID(id).toString());
             term.l();
         } catch (SQLException | ClassNotFoundException ex) {
             term.limparTerminal();
@@ -225,7 +226,7 @@ public class Main {
             int id = term.consistirInteiro();
             term.l();
             try {
-                System.out.println(Construcao.consultarByID(id).toString());
+                System.out.println(conDAO.consultarByID(id).toString());
             } catch (SQLException | ClassNotFoundException ex) {
                 System.out.println("Falha ao consultar o cadastro.");
                 System.out.println("Tenha certeza que o cadastro com esse ID exista!");
@@ -283,7 +284,7 @@ public class Main {
 
         try {
             term.l();
-            Construcao.atualizar(c);
+            conDAO.atualizar(c);
             term.l();
         } catch (SQLException | ClassNotFoundException ex){
             term.limparTerminal();
@@ -303,7 +304,7 @@ public class Main {
         int opcaoConstrucao = term.consistirInteiro();
         
         try {
-            Construcao.deletar(Construcao.consultarTodos().get(opcaoConstrucao - 1));
+            conDAO.deletar(conDAO.consultarTodos().get(opcaoConstrucao - 1));
             term.l();
             System.out.println("Cadastro da construcao foi deletado com sucesso!");
             term.l();
@@ -320,7 +321,7 @@ public class Main {
     private static void listarConstrucoes() {
         try {
             int contador = 1;
-            for (Construcao c: Construcao.consultarTodos()){
+            for (Construcao c: conDAO.consultarTodos()){
                 System.out.println("   "+contador+" - "+c.getNome());
                 contador++;
             }
