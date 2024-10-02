@@ -220,20 +220,22 @@ public class Main {
         }
     }
     
-    public static void atualizar(){
+    public static void atualizar() {
         Construcao c = new Construcao();
-
-        //consistir para a sua construção
+    
+        // consistir para a sua construção
         do {
             System.out.println("------------------------- ATUALIZAR -------------------------");
             System.out.println("Insira o ID da construcao que quer atualizar: ");
-
+    
             int id = term.consistirInteiro();
             c.setId(id);
-            
+    
             term.l();
             try {
-                System.out.println(conDAO.consultarByID(c).toString());
+                Construcao construcaoExistente = conDAO.consultarByID(c);
+                System.out.println("\n"+construcaoExistente.toString());
+                c = construcaoExistente; // recupera os dados da construção existente
             } catch (SQLException | ClassNotFoundException ex) {
                 System.out.println("Falha ao consultar o cadastro.");
                 System.out.println("Tenha certeza que o cadastro com esse ID exista!");
@@ -242,65 +244,123 @@ public class Main {
             }
             term.l();
             System.out.print("\nEsta é a construcao que deseja atualizar?(s/n) ");
-            char opcaoSair = in.nextLine().charAt(0);    
-                if (Character.toLowerCase(opcaoSair) == 's'){         
-                    c.setId(id);
-                    break;
-                }
+            char opcaoSair = in.nextLine().charAt(0);
+            if (Character.toLowerCase(opcaoSair) == 's') {
+                c.setId(id);
+                break;
+            }
             term.l();
             term.limparTerminal();
-            
+        } while (true);
+    
+        boolean continuar = true;
+        while (continuar) {
+            term.limparTerminal();
+            System.out.println("------------- CONSTRUCAO QUE ESTAMOS ATUALIZANDO -------------");
+            System.out.println("\n" + c.toString());
+            term.l();
+            System.out.println("           Selecione o campo que deseja atualizar:");
+            term.l();
+            System.out.println("  1 - Nome");
+            System.out.println("  2 - Endereco");
+            System.out.println("  3 - Tipo");
+            System.out.println("  4 - Data de Inicio");
+            System.out.println("  5 - Data de Previsao de Termino");
+            System.out.println("  6 - Area Total (m2)");
+            System.out.println("  7 - Orcamento Total");
+            System.out.println("  8 - Responsavel");
+            System.out.println("  9 - Status");
+            System.out.println("  0 - Finalizar Atualizacao");
+            term.l();
+            System.out.print("Opcao: ");
+    
+            int opcao = term.consistirInteiro();
+    
+            switch (opcao) {
+                case 1:
+                    term.l();
+                    System.out.print("Insira o novo nome da construcao: ");
+                    String nome = in.nextLine();
+                    c.setNome(nome);
+                    term.limparTerminal();
+                    break;
+                case 2:
+                    term.l();
+                    System.out.print("Insira o novo endereco da construcao: ");
+                    String endereco = in.nextLine();
+                    c.setEndereco(endereco);
+                    term.limparTerminal();
+                    break;
+                case 3:
+                    term.l();
+                    System.out.print("Insira o novo tipo da construcao: ");
+                    String tipo = in.nextLine();
+                    c.setTipo(tipo);
+                    term.limparTerminal();
+                    break;
+                case 4:
+                    term.l();
+                    System.out.print("Insira a nova data de inicio da construcao (dd/MM/yyyy): ");
+                    LocalDate dataInicio = term.consistirData();
+                    c.setDataInicio(dataInicio);
+                    term.limparTerminal();
+                    break;
+                case 5:
+                    term.l();
+                    System.out.print("Insira a nova data de previsao de termino da construcao (dd/MM/yyyy): ");
+                    LocalDate dataTermino = term.consistirData();
+                    c.setDataPrevisaoTermino(dataTermino);
+                    term.limparTerminal();
+                    break;
+                case 6:
+                    term.l();
+                    System.out.print("Insira a nova area em metros quadrados: ");
+                    int area = term.consistirInteiro();
+                    c.setAreaTotal_m2(area);
+                    term.limparTerminal();
+                    break;
+                case 7:
+                    term.l();
+                    System.out.print("Insira o novo orcamento total da construcao: ");
+                    double orcamento = term.consistirDouble();
+                    c.setOrcamentoTotal(orcamento);
+                    term.limparTerminal();
+                    break;
+                case 8:
+                    term.l();
+                    System.out.print("Insira o novo nome do responsavel da construcao: ");
+                    String responsavel = in.nextLine();
+                    c.setResponsavel(responsavel);
+                    term.limparTerminal();
+                    break;
+                case 9:
+                    term.l();
+                    System.out.print("Insira o novo status atual da construcao: ");
+                    String status = in.nextLine();
+                    c.setStatus(status);
+                    term.limparTerminal();
+                    break;
+                case 0:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
+            }
         }
-        while(true);
-
-        System.out.print("Insira o novo nome da construcao: ");
-        String nome = in.nextLine();
-        c.setNome(nome);
-
-        System.out.print("Insira o novo endereco da construcao: ");
-        String endereco = in.nextLine();
-        c.setEndereco(endereco);
-
-        System.out.print("Insira o novo tipo da construcao: ");
-        String tipo = in.nextLine();
-        c.setTipo(tipo);  
-
-        System.out.print("Insira a nova data de inicio da construcao (dd/MM/yyyy): ");
-        LocalDate dataInicio = term.consistirData();
-        c.setDataInicio(dataInicio);
-
-        System.out.print("Insira a nova data de previsao de termino da construcao (dd/MM/yyyy): ");
-        LocalDate dataTermino = term.consistirData();
-        c.setDataPrevisaoTermino(dataTermino);
-
-        System.out.print("Insira a nova area em metros quadrados: ");
-        int area = term.consistirInteiro();
-        c.setAreaTotal_m2(area); 
-
-        System.out.print("Insira o novo orcamento total da contrucao: ");
-        double orcamento = term.consistirDouble();
-        c.setOrcamentoTotal(orcamento); 
-
-        System.out.print("Insira o novo nome do responsavel da construcao: ");
-        String responsavel = in.nextLine();
-        c.setResponsavel(responsavel);
-        
-        System.out.print("Insira o novo status atual da construcao: ");
-        String status = in.nextLine();
-        c.setStatus(status);
-
+    
         try {
             term.l();
             conDAO.atualizar(c);
             term.l();
-        } catch (SQLException | ClassNotFoundException ex){
+        } catch (SQLException | ClassNotFoundException ex) {
             term.limparTerminal();
             term.l();
             System.out.println("Falha ao atualizar os dados da construcao.");
             term.l();
         }
     }
-
+    
     private static void deletarConstrucao() {
         System.out.println("-------------------------- DELETAR --------------------------");
         System.out.println("Construcoes cadastradas:");
