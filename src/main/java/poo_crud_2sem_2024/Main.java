@@ -85,10 +85,8 @@ public class Main {
                     System.out.println("-------------------------- AVISO ----------------------------");
                     System.out.println("Deseja mesmo sair??");
                     System.out.print("Insira 's' caso queira sair: ");
-
-                    char opcaoSair = in.nextLine().charAt(0);
                         
-                    if (Character.toLowerCase(opcaoSair) == 's'){
+                    if (term.consistirCaractereMinusculo() == 's'){
                         term.l();
                         System.out.println("Até mais!!");
                         term.pausarPrograma();
@@ -273,8 +271,7 @@ public class Main {
             }
             term.l();
             System.out.print("\nEsta é a construcao que deseja atualizar?(s/n) ");
-            char opcaoSair = in.nextLine().charAt(0);
-            if (Character.toLowerCase(opcaoSair) == 's') {
+            if (term.consistirCaractereMinusculo() == 's') {
                 c.setId(id);
                 break;
             }
@@ -405,12 +402,11 @@ public class Main {
                 return;
             }
             term.l();
-            System.out.print("\nEsta é a construcao que deseja deletar?(s/n) ");
-            char opcaoSair = in.nextLine().charAt(0);
-            if (Character.toLowerCase(opcaoSair) == 's') {
+            System.out.print("\nEsta é a construcao que deseja deletar?(s/n) ");   
+            if (term.consistirCaractereMinusculo() == 's') {
                 c.setId(id);
                 break;
-            }
+            }     
             term.l();
             term.limparTerminal();
 

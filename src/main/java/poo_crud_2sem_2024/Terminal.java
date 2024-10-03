@@ -21,6 +21,17 @@ public class Terminal {
         }
         while (true);
     }
+
+    public char consistirCaractereMinusculo() {    
+        do {
+            try {
+                return Character.toLowerCase(in.nextLine().charAt(0));
+            } catch (StringIndexOutOfBoundsException e){
+                System.out.println("Insira um caractere valido!!");
+            }
+        }
+        while (true);
+    }
     
     public double consistirDouble() {
         do {
@@ -117,4 +128,5 @@ public class Terminal {
         }
         System.out.printf("\033[%dm", color);
     }
+
 }
