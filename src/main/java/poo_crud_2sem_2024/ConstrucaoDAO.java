@@ -46,8 +46,8 @@ public class ConstrucaoDAO {
         
         Connection conn = ConexaoFactory.getConexao();
         String SQL = "SELECT * FROM construcoes";
-        PreparedStatement stmt = conn.prepareStatement(SQL);
-        ResultSet rs = stmt.executeQuery();
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        ResultSet rs = pstmt.executeQuery();
 
         while (rs.next()){
             Construcao cst = new Construcao();
@@ -66,6 +66,7 @@ public class ConstrucaoDAO {
             construcoes.add(cst);
         }
         
+        pstmt.close();
         conn.close();
 
         return construcoes;
@@ -74,9 +75,9 @@ public class ConstrucaoDAO {
     public Construcao consultarByID(Construcao c) throws SQLException, ClassNotFoundException{
         Connection conn = ConexaoFactory.getConexao();
         String SQL = "SELECT * FROM construcoes WHERE id = ?";
-        PreparedStatement stmt = conn.prepareStatement(SQL);
-        stmt.setInt(1, c.getId());
-        ResultSet rs = stmt.executeQuery();
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        pstmt.setInt(1, c.getId());
+        ResultSet rs = pstmt.executeQuery();
         rs.next();
                         
         c.setNome(rs.getString("nome"));
@@ -89,6 +90,9 @@ public class ConstrucaoDAO {
         c.setResponsavel(rs.getString("nome_responsavel"));
         c.setStatus(rs.getString("status"));
         
+        pstmt.close();
+        conn.close();
+
         return c;
     }
     
@@ -132,10 +136,13 @@ public class ConstrucaoDAO {
     public void deletar(Construcao c) throws SQLException, ClassNotFoundException {
         Connection conn = ConexaoFactory.getConexao();
         String SQL = "DELETE FROM construcoes WHERE id = ?";
-        PreparedStatement stmt = conn.prepareStatement(SQL);
-        stmt.setInt(1, c.getId());
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        pstmt.setInt(1, c.getId());
         
-        stmt.execute();
+        pstmt.execute();
+
+        pstmt.close();
+        conn.close();
         
     }
     
