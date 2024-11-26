@@ -62,4 +62,6 @@ String PASSWORD = "sua senha";
 ## Vídeo de apresentação
 Foi elaborado um video de apresentação com duração de 8 minutos para o professor de POO, os arquivos da edição do vídeo estão presentes neste repositório.
 Clique **[aqui](https://www.youtube.com/watch?v=RdHQh8YDeDM)** para assistir ao vídeo.
-![image](https://github.com/fabin0casa/POO-Java-PostgreSQL/blob/main/apresentacao/thumbnail%20POO/thumb%20POO.png?raw=true)
+
+![image](https://github.com/user-attachments/assets/c90433a3-88cb-478e-a060-3eca2e8e37fb)
+
